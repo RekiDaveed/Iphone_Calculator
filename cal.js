@@ -28,6 +28,8 @@ operations.forEach(button => {
             } else {
                 result.value += currentOperator;
             }
+        } else if (button.innerHTML === '-') {
+            result.value += '-';
         } else {
             console.log('No number to operate on');
         }
@@ -49,7 +51,9 @@ decimaladd.addEventListener('click', function() {
 });
 
 percent.addEventListener('click', function() {
-    result.value = parseFloat(result.value) / 100;
+    if (result.value !== '') {
+        result.value = parseFloat(result.value) / 100;
+    }
 });
 
 negativepositive.addEventListener('click', function() {
