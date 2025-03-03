@@ -1,13 +1,13 @@
-const Numbers = document.querySelectorAll('#Number');
+let Numbers = document.querySelectorAll('#Number');
 const del = document.querySelector('#clear');
-const operations = document.querySelectorAll('#operator');
-const result = document.querySelector('.result');
-const equal = document.querySelector('#showResult');
+let operations = document.querySelectorAll('#operator');
+let result = document.querySelector('.result');
+let showit = document.getElementById('ShowResult');
 const decimaladd = document.querySelector('#decimal');
 const percent = document.querySelector('#percentage');
-const negativepositive = document.querySelector('#negative');
+const negativepositive = document.getElementById('negativeplus');
 
-Numbers.forEach(button => { 
+Numbers.forEach(button => {
     button.addEventListener('click', function() {
         result.value += button.innerHTML;
     });
@@ -20,8 +20,8 @@ del.addEventListener('click', function() {
 operations.forEach(button => {
     button.addEventListener('click', function() {
         if (result.value !== '') {
-            const lastChar = result.value.slice(-1); 
-            const currentOperator = button.innerHTML === 'X' ? '*' : button.innerHTML; 
+            const currentOperator = button.innerHTML === 'X' ? '*' : button.innerHTML;
+            const lastChar = result.value.slice(-1);
 
             if (isOperator(lastChar)) {
                 result.value = result.value.slice(0, -1) + currentOperator;
@@ -32,6 +32,30 @@ operations.forEach(button => {
             console.log('No number to operate on');
         }
     });
+});
+
+showit.addEventListener('click', function() {
+    try {
+        result.value = eval(result.value);
+    } catch (error) {
+        result.value = 'Error';
+    }
+});
+
+decimaladd.addEventListener('click', function() {
+    if (!result.value.includes('.')) {
+        result.value += '.';
+    }
+});
+
+percent.addEventListener('click', function() {
+    result.value = parseFloat(result.value) / 100;
+});
+
+negativepositive.addEventListener('click', function() {
+    if (result.value !== '') {
+        result.value = parseFloat(result.value) * -1;
+    }
 });
 
 function isOperator(character) {
