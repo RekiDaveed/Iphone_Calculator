@@ -6,6 +6,7 @@ let showit = document.getElementById('ShowResult');
 const decimaladd = document.querySelector('#decimal');
 const percent = document.querySelector('#percentage');
 const negativepositive = document.getElementById('negativeplus');
+let previous = document.querySelector('.PreviousResult');
 
 Numbers.forEach(button => {
     button.addEventListener('click', function() {
@@ -15,12 +16,13 @@ Numbers.forEach(button => {
 
 del.addEventListener('click', function() {
     result.value = '';
+    previous.value = '';
 });
 
 operations.forEach(button => {
     button.addEventListener('click', function() {
         if (result.value !== '') {
-            const currentOperator = button.innerHTML 
+            const currentOperator = button.innerHTML;
             const lastChar = result.value.slice(-1);
 
             if (isOperator(lastChar)) {
@@ -38,9 +40,17 @@ operations.forEach(button => {
 
 showit.addEventListener('click', function() {
     try {
-        result.value = eval(result.value);
+        let expression = result.value.replace(/\s+/g, ''); 
+        const evaluatedResult = math.evaluate(expression); 
+        
+        previous.value = `${result.value} = ${evaluatedResult}`;
+        result.value = evaluatedResult;
     } catch (error) {
-        result.value = '';
+        console.log(`Error: ${error.message}`);
+        
+        setTimeout(() => {
+            result.value = 'Error';
+        }, 2000);
     }
 });
 
@@ -58,18 +68,10 @@ percent.addEventListener('click', function() {
 
 negativepositive.addEventListener('click', function() {
     if (result.value !== '') {
-        result.value = parseFloat(result.value) * -1;
+        result.value = (parseFloat(result.value) * -1).toString();
     }
 });
 
 function isOperator(character) {
     return ['+', '-', '*', '/'].includes(character);
 }
-
-negativepositive.addEventListener('click', function() {
-    if (result.value !== '') {
-        let parts = result.value.split(/([+\-*/])/);
-        parts[0] = parseFloat(parts[0]) * -1;
-        result.value = parts.join('');
-    }
-});
