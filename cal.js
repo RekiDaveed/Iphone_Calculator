@@ -47,7 +47,7 @@ showit.addEventListener('click', function() {
         result.value = evaluatedResult;
     } catch (error) {
         console.log(`Error: ${error.message}`);
-        
+
         setTimeout(() => {
             result.value = 'Error';
         }, 2000);
