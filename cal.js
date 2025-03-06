@@ -20,7 +20,7 @@ del.addEventListener('click', function() {
 operations.forEach(button => {
     button.addEventListener('click', function() {
         if (result.value !== '') {
-            const currentOperator = button.innerHTML === 'X' ? '*' : button.innerHTML;
+            const currentOperator = button.innerHTML 
             const lastChar = result.value.slice(-1);
 
             if (isOperator(lastChar)) {
@@ -40,7 +40,7 @@ showit.addEventListener('click', function() {
     try {
         result.value = eval(result.value);
     } catch (error) {
-        result.value = 'Error';
+        result.value = '';
     }
 });
 
@@ -65,3 +65,11 @@ negativepositive.addEventListener('click', function() {
 function isOperator(character) {
     return ['+', '-', '*', '/'].includes(character);
 }
+
+negativepositive.addEventListener('click', function() {
+    if (result.value !== '') {
+        let parts = result.value.split(/([+\-*/])/);
+        parts[0] = parseFloat(parts[0]) * -1;
+        result.value = parts.join('');
+    }
+});
