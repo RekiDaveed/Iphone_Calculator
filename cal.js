@@ -44,7 +44,8 @@ showit.addEventListener('click', function() {
         const evaluatedResult = math.evaluate(expression); 
         
         previous.value = `${result.value} = ${evaluatedResult}`;
-        result.value = evaluatedResult;
+        result.value = evaluatedResult.toString().split('').join(' ');
+
     } catch (error) {
         console.log(`Error: ${error.message}`);
 
@@ -53,6 +54,7 @@ showit.addEventListener('click', function() {
         }, 2000);
     }
 });
+
 
 decimaladd.addEventListener('click', function() {
     if (!result.value.includes('.')) {
